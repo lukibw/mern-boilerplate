@@ -1,0 +1,90 @@
+body {
+  font-size: 18px;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+a:hover {
+  text-decoration: none;
+}
+
+.app {
+  margin: 0 auto;
+  width: 600px;
+}
+
+.nav {
+  margin-bottom: 25px;
+}
+
+.nav-item,
+.nav-item-active {
+  cursor: pointer;
+  padding: 15px 10px;
+  color: #00ccff;
+  font-weight: 700;
+  width: fit-content;
+  display: inline-block;
+}
+
+.nav-item-active {
+  border-bottom: 2.5px solid #00ccff;
+}
+
+.form {
+  margin: 10px;
+  padding: 15px;
+}
+
+input {
+  margin-bottom: 15px;
+  border: none;
+  border-bottom: 0.8px solid gray;
+  padding: 4px;
+  display: block;
+  outline: none;
+}
+
+input:focus {
+  border-bottom: 0.8px solid black;
+}
+
+.submit-btn {
+  color: #00ccff;
+  background-color: white;
+  padding: 5px 12px;
+  font-size: 18px;
+  font-weight: 700;
+  border: none;
+  outline: none;
+}
+
+.submit-btn:hover {
+  background-color: #f2f2f2;
+  -webkit-transition: background-color 0.3s linear;
+  -ms-transition: background-color 0.3s linear;
+  transition: background-color 0.3s linear;
+}
+
+.success-msg {
+  background-color: #80ff80;
+  color: #008000;
+  padding: 12px 30px;
+  margin: 10px;
+  border-radius: 5px;
+}
+
+.error-msg {
+  background-color: #ff8080;
+  color: #e60000;
+  padding: 12px 30px;
+  margin: 10px;
+  border-radius: 5px;
+}
+
+.close-msg {
+  cursor: pointer;
+  float: right;
+}

@@ -1,19 +1,32 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { CLOSE_MESSAGE } from "../actions/types";
 
+import Alert from "@material-ui/lab/Alert";
+import Snackbar from "@material-ui/core/Snackbar";
+
 function MessageBox({ message, messageType, dispatch }) {
-  if (!message) return null;
+  const [open, setOpen] = useState(false);
+  useEffect(() => {
+    if (message !== null) {
+      setOpen(true);
+    }
+  }, [message]);
   return (
-    <div className={messageType === "success" ? "success-msg" : "error-msg"}>
-      {message}
-      <div
-        className="close-msg"
-        onClick={() => dispatch({ type: CLOSE_MESSAGE })}
+    <Snackbar
+      open={open}
+      autoHideDuration={messageType === "error" ? 4000 : 1500}
+      onClose={() => setOpen(false)}
+      onExited={() => dispatch({ type: CLOSE_MESSAGE })}
+    >
+      <Alert
+        variant="filled"
+        severity={messageType}
+        onClose={() => setOpen(false)}
       >
-        &times;
-      </div>
-    </div>
+        {message}
+      </Alert>
+    </Snackbar>
   );
 }
 

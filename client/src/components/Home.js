@@ -1,17 +1,36 @@
 import React from "react";
-import MessageBox from "./MessageBox";
 
-function Home() {
+import { useStyles } from "./Login";
+import Container from "@material-ui/core/Container";
+import Typography from "@material-ui/core/Typography";
+import { connect } from "react-redux";
+
+function Home({ user }) {
+  const classes = useStyles();
   return (
-    <div>
-      <MessageBox />
-      <h1>MERN starter</h1>
-      <p>
-        MongoDB/Express/React&Redux/Node boilerplate with basic passportjs
-        authentication
-      </p>
-    </div>
+    <Container maxWidth="xs">
+      <div className={classes.box}>
+        <Typography component="h1" variant="h5">
+          MERN Boilerplate
+        </Typography>
+        <p>
+          MongoDB, Express, React/Redux, Node starter with basic passportjs
+          authentication
+        </p>
+        {user && (
+          <Typography variant="h6" style={{ color: "gray" }}>
+            Hello {user.username}
+          </Typography>
+        )}
+      </div>
+    </Container>
   );
 }
 
-export default Home;
+const mapStateToProps = state => {
+  return {
+    user: state.auth.user,
+  };
+};
+
+export default connect(mapStateToProps)(Home);

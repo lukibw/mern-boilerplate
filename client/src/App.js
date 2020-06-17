@@ -8,6 +8,9 @@ import Home from "./components/Home";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import Navbar from "./components/Navbar";
+import MessageBox from "./components/MessageBox";
+
+import Container from "@material-ui/core/Container";
 
 function App() {
   useEffect(() => {
@@ -17,14 +20,15 @@ function App() {
   return (
     <Router>
       <Provider store={store}>
-        <div className="app">
+        <Container maxWidth="sm">
+          <MessageBox />
           <Navbar />
           <Switch>
             <Route exact path="/" component={Home} />
             <Route path="/login" component={Login} />
             <Route path="/register" component={Register} />
           </Switch>
-        </div>
+        </Container>
       </Provider>
     </Router>
   );

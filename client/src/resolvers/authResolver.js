@@ -74,7 +74,6 @@ export const authResolver = (state = initialState, action) => {
       return {
         ...state,
         message: null,
-        messageType: null,
       };
     default:
       return state;

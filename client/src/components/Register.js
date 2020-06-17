@@ -2,9 +2,15 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import { register } from "../actions/creators";
 import { useHistory } from "react-router-dom";
-import MessageBox from "./MessageBox";
+
+import { useStyles } from "./Login";
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
+import Container from "@material-ui/core/Container";
 
 function Register({ register }) {
+  const classes = useStyles();
   const history = useHistory();
   const [state, setState] = useState({
     username: "",
@@ -24,34 +30,59 @@ function Register({ register }) {
     register(state.username, state.email, state.password, history);
   };
   return (
-    <>
-      <MessageBox />
-      <h2>Register</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="username"
-          value={state.username}
-          placeholder="Username"
-          onChange={handleInputChange}
-        />
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={state.email}
-          onChange={handleInputChange}
-        />
-        <input
-          type="password"
-          name="password"
-          value={state.password}
-          placeholder="Password"
-          onChange={handleInputChange}
-        />
-        <button className="submit-btn">Submit</button>
-      </form>
-    </>
+    <Container maxWidth="xs">
+      <div className={classes.box}>
+        <Typography component="h1" variant="h5">
+          Sign up
+        </Typography>
+        <form className={classes.form}>
+          <TextField
+            variant="outlined"
+            margin="normal"
+            fullWidth
+            id="username"
+            label="Username"
+            name="username"
+            autoComplete="username"
+            value={state.username}
+            onChange={handleInputChange}
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            fullWidth
+            id="email"
+            label="Email Address"
+            name="email"
+            autoComplete="email"
+            value={state.email}
+            onChange={handleInputChange}
+          />
+          <TextField
+            type="password"
+            variant="outlined"
+            margin="normal"
+            fullWidth
+            id="password"
+            label="Password"
+            name="password"
+            autoComplete="password"
+            value={state.password}
+            onChange={handleInputChange}
+          />
+          <Button
+            className={classes.button}
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            onClick={handleSubmit}
+          >
+            Submit
+          </Button>
+        </form>
+      </div>
+    </Container>
   );
 }
 

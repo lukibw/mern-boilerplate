@@ -8,6 +8,7 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
+import { LOGIN_FAIL } from "../actions/types";
 
 export const useStyles = makeStyles(theme => ({
   form: {
@@ -23,7 +24,7 @@ export const useStyles = makeStyles(theme => ({
   },
 }));
 
-function Login({ login }) {
+function Login({ login, dispatch }) {
   const classes = useStyles();
   const history = useHistory();
   const [state, setState] = useState({
@@ -40,7 +41,16 @@ function Login({ login }) {
   };
   const handleSubmit = e => {
     e.preventDefault();
-    login(state.email, state.password, history);
+    if (state.email !== "" && state.password !== "") {
+      dispatch(login(state.email, state.password, history));
+    } else {
+      dispatch({
+        type: LOGIN_FAIL,
+        payload: {
+          message: "Please enter email and password",
+        },
+      });
+    }
   };
   return (
     <Container maxWidth="xs">
@@ -87,4 +97,11 @@ function Login({ login }) {
   );
 }
 
-export default connect(null, { login })(Login);
+const mapDispatchToProps = dispatch => {
+  return {
+    login,
+    dispatch,
+  };
+};
+
+export default connect(null, mapDispatchToProps)(Login);

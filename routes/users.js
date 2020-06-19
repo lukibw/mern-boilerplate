@@ -9,13 +9,13 @@ router.post("/register", async (req, res) => {
   const { username, email, password } = req.body;
 
   if (!username || !email || !password) {
-    return res.json({ message: "Fill in all fields" });
+    return res.status(400).json({ message: "Fill in all fields" });
   }
 
   const user = await User.findOne({ email });
 
   if (user) {
-    return res.json({
+    return res.status(404).json({
       message: "User with this email already exists",
     });
   }
@@ -37,17 +37,17 @@ router.post("/register", async (req, res) => {
 router.post("/login", (req, res) => {
   passport.authenticate("local", (err, user) => {
     if (!req.body.email || !req.body.password) {
-      return res.json({ message: "Fill in all fields" });
+      return res.status(400).json({ message: "Fill in all fields" });
     }
     if (err) {
-      return res.json({ message: err });
+      return res.status(500).json({ message: err });
     }
     if (!user) {
-      return res.json({ message: "User not found" });
+      return res.status(404).json({ message: "User not found" });
     }
     req.logIn(user, err => {
       if (err) {
-        return res.json({ message: err });
+        return res.status(500).json({ message: err });
       }
       return res.json({
         message: "Successfully logged in",
@@ -62,13 +62,17 @@ router.get("/logout", isAuth, (req, res) => {
   res.json({ message: "Successfully logged out" });
 });
 
-router.get("/user", isAuth, async (req, res) => {
-  try {
-    const user = await User.findById(req.user.id).select("-password");
-    return res.json({ message: "User found", user });
-  } catch (err) {
-    return res.json({ message: "User not found" });
+router.get("/user", async (req, res) => {
+  if (req.user) {
+    return res.json({
+      user: {
+        id: req.user.id,
+        username: req.user.username,
+        email: req.user.email,
+      },
+    });
   }
+  return res.json({ message: "No session" });
 });
 
 module.exports = router;

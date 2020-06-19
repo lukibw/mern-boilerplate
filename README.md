@@ -17,7 +17,7 @@ Boilerplate for mern stack app with passport auth and redux
 
 ## Quick Start
 
-Create a .env file with mongo uri and session secret
+Create a .env file with `MONGO_URI` and `SESSION_SECRET`
 
 ```
     npm install && npm run client-install

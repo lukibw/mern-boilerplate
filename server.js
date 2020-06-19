@@ -62,12 +62,10 @@ app.use("/users", usersRouter);
 
 // Sessions
 passport.serializeUser(function (user, done) {
-  console.log("serialize user");
   done(null, user.id);
 });
 
 passport.deserializeUser(function (id, done) {
-  console.log("deserialize user");
   User.findById(id, function (err, user) {
     done(err, user);
   });

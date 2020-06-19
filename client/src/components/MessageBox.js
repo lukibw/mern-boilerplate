@@ -14,6 +14,7 @@ function MessageBox({ message, messageType, dispatch }) {
   }, [message]);
   return (
     <Snackbar
+      disableWindowBlurListener={true}
       open={open}
       autoHideDuration={messageType === "error" ? 4000 : 1500}
       onClose={() => setOpen(false)}

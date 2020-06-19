@@ -8,8 +8,9 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
+import { REGISTER_FAIL } from "../actions/types";
 
-function Register({ register }) {
+function Register({ register, dispatch }) {
   const classes = useStyles();
   const history = useHistory();
   const [state, setState] = useState({
@@ -27,7 +28,16 @@ function Register({ register }) {
   };
   const handleSubmit = e => {
     e.preventDefault();
-    register(state.username, state.email, state.password, history);
+    if (state.email !== "" && state.password !== "" && state.username !== "") {
+      dispatch(register(state.username, state.email, state.password, history));
+    } else {
+      dispatch({
+        type: REGISTER_FAIL,
+        payload: {
+          message: "Please enter username, email and password",
+        },
+      });
+    }
   };
   return (
     <Container maxWidth="xs">
@@ -86,4 +96,11 @@ function Register({ register }) {
   );
 }
 
-export default connect(null, { register })(Register);
+const mapDispatchToProps = dispatch => {
+  return {
+    register,
+    dispatch,
+  };
+};
+
+export default connect(null, mapDispatchToProps)(Register);

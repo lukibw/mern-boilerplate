@@ -37,24 +37,23 @@ export const login = (email, password, history) => dispatch => {
   axios
     .post("http://localhost:5000/users/login", body, getConfig())
     .then(res => {
-      if (res.data.user) {
-        // Successfully logged in
-        dispatch({
-          type: LOGIN_SUCCESS,
-          payload: {
-            user: res.data.user,
-            message: res.data.message,
-          },
-        });
-        history.push("/"); // Change if you want
-      } else {
-        dispatch({
-          type: LOGIN_FAIL,
-          payload: {
-            message: res.data.message,
-          },
-        });
-      }
+      // Successfully logged in
+      dispatch({
+        type: LOGIN_SUCCESS,
+        payload: {
+          user: res.data.user,
+          message: res.data.message,
+        },
+      });
+      history.push("/"); // Change if you want
+    })
+    .catch(err => {
+      dispatch({
+        type: LOGIN_FAIL,
+        payload: {
+          message: err.response.message,
+        },
+      });
     });
 };
 
@@ -63,23 +62,22 @@ export const register = (username, email, password, history) => dispatch => {
   axios
     .post("http://localhost:5000/users/register", body, getConfig())
     .then(res => {
-      if (res.data.user) {
-        // Successfully registered
-        dispatch({
-          type: REGISTER_SUCCESS,
-          payload: {
-            message: res.data.message,
-          },
-        });
-        history.push("/"); // Change if you want
-      } else {
-        dispatch({
-          type: REGISTER_FAIL,
-          payload: {
-            message: res.data.message,
-          },
-        });
-      }
+      // Successfully registered
+      dispatch({
+        type: REGISTER_SUCCESS,
+        payload: {
+          message: res.data.message,
+        },
+      });
+      history.push("/"); // Change if you want
+    })
+    .catch(err => {
+      dispatch({
+        type: REGISTER_FAIL,
+        payload: {
+          message: err.response.message,
+        },
+      });
     });
 };
 
